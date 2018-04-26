@@ -458,7 +458,7 @@ public class TestMockDAGAppMaster {
   }
 
 
-  @Test (timeout = 10000)
+  @Test
   public void testBasicCounters() throws Exception {
     TezConfiguration tezconf = new TezConfiguration(defaultConf);
     MockTezClient tezClient = new MockTezClient("testMockAM", tezconf, true, null, null, null,

@@ -98,7 +98,9 @@ public interface CounterGroupBase<T extends TezCounter>
    * @param rightGroup  the group to be added to this group
    */
   void incrAllCounters(CounterGroupBase<T> rightGroup);
-  
+
+  void aggregateAllCounters(CounterGroupBase<T> rightGroup);
+
   @Private
   /**
    * Exposes the underlying group type if a facade.

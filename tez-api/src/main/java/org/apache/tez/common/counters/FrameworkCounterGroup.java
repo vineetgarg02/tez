@@ -56,6 +56,8 @@ public abstract class FrameworkCounterGroup<T extends Enum<T>,
     final T key;
     final String groupName;
     private long value;
+    private long minValue;
+    private long maxValue;
 
     public FrameworkCounter(T ref, String groupName) {
       key = ref;
@@ -87,6 +89,15 @@ public abstract class FrameworkCounterGroup<T extends Enum<T>,
       value += incr;
     }
 
+    @Override
+    public void aggregate(long val) {
+      if(val < this.minValue) {
+        this.minValue = val;
+      }
+      if(val > this.maxValue) {
+        this.maxValue = val;
+      }
+    }
     @Override
     public void write(DataOutput out) throws IOException {
       assert false : "shouldn't be called";
@@ -198,6 +209,18 @@ public abstract class FrameworkCounterGroup<T extends Enum<T>,
       for (TezCounter counter : other) {
         findCounter(((FrameworkCounter) counter).key.name())
             .increment(counter.getValue());
+      }
+    }
+  }
+
+  @SuppressWarnings("rawtypes")
+  @Override
+  public void aggregateAllCounters(CounterGroupBase<C> other) {
+    if (checkNotNull(other, "other counter group")
+        instanceof FrameworkCounterGroup<?, ?>) {
+      for (TezCounter counter : other) {
+        findCounter(((FrameworkCounter) counter).key.name())
+            .aggregate(counter.getValue());
       }
     }
   }
