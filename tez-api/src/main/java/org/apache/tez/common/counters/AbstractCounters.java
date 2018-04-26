@@ -364,6 +364,14 @@ public abstract class AbstractCounters<C extends TezCounter,
     }
   }
 
+  public synchronized void aggregateAllCounters(AbstractCounters<C, G> other) {
+    for(G right : other) {
+      String groupName = right.getName();
+      G left = (isFrameworkGroup(groupName) ? fgroups : groups).get(groupName);
+      left.aggregateAllCounters(right);
+    }
+  }
+
   @Override
   @SuppressWarnings("unchecked")
   public boolean equals(Object genericRight) {

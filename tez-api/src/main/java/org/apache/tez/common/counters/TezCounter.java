@@ -73,6 +73,12 @@ public interface TezCounter extends Writable {
    * @param incr the value to increase this counter by
    */
   void increment(long incr);
+
+  /**
+   * Compute MIN/MAX for this counter given value
+   * @param val the value to compute aggregation upon
+   */
+  void aggregate(long val);
  
   /**
    * Return the underlying object if this is a facade.

@@ -37,6 +37,8 @@ public class GenericCounter extends AbstractCounter {
   private String name;
   private String displayName;
   private final AtomicLong value = new AtomicLong(0);
+  private final AtomicLong minVal = new AtomicLong(0);
+  private final AtomicLong maxVal = new AtomicLong(0);
 
   public GenericCounter() {
     // mostly for readFields
@@ -50,6 +52,8 @@ public class GenericCounter extends AbstractCounter {
     this.name = StringInterner.weakIntern(name);
     this.displayName = StringInterner.weakIntern(displayName);
     this.value.set(value);
+    this.maxVal.set(0);
+    this.minVal.set(0);
   }
 
   @Override @Deprecated
@@ -101,6 +105,16 @@ public class GenericCounter extends AbstractCounter {
   @Override
   public void increment(long incr) {
     value.addAndGet(incr);
+  }
+
+  @Override
+  public void aggregate(long val) {
+    if(val< this.minVal.get()) {
+      this.minVal.set(val);
+    }
+    if(val > this.maxVal.get()) {
+      this.maxVal.set(val);
+    }
   }
 
   @Override

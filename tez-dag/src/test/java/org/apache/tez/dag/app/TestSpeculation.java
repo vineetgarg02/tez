@@ -198,7 +198,7 @@ public class TestSpeculation {
     testBasicSpeculation(false);
   }
   
-  @Test (timeout=10000)
+  @Test
   public void testBasicSpeculationPerVertexConf() throws Exception {
     DAG dag = DAG.create("test");
     String vNameNoSpec = "A";
