@@ -3340,7 +3340,6 @@ public class VertexImpl implements org.apache.tez.dag.app.dag.Vertex, EventHandl
       vertexStats.updateStats(t.getReport());
       TezCounters counters = t.getCounters();
       this.fullCounters.incrAllCounters(counters);
-      this.fullCounters.aggregateAllCounters(counters);
     }
   }
 

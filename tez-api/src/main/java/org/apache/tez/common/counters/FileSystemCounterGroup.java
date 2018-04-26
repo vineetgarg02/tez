@@ -66,8 +66,6 @@ public abstract class FileSystemCounterGroup<C extends TezCounter>
     final String scheme;
     final FileSystemCounter key;
     private long value;
-    private long maxValue;
-    private long minValue;
 
     public FSCounter(String scheme, FileSystemCounter ref) {
       this.scheme = scheme; // this is interned in the checkScheme() method via a map
@@ -97,16 +95,6 @@ public abstract class FileSystemCounterGroup<C extends TezCounter>
     @Override
     public void increment(long incr) {
       value += incr;
-    }
-
-    @Override
-    public void aggregate(long val) {
-      if(val < this.minValue) {
-        this.minValue = val;
-      }
-      if(val > this.maxValue) {
-        this.maxValue = val;
-      }
     }
 
     @Override
@@ -247,16 +235,6 @@ public abstract class FileSystemCounterGroup<C extends TezCounter>
     }
   }
 
-  @Override
-  public void aggregateAllCounters(CounterGroupBase<C> other) {
-    if (checkNotNull(other.getUnderlyingGroup(), "other group")
-        instanceof FileSystemCounterGroup<?>) {
-      for (TezCounter counter : other) {
-        FSCounter c = (FSCounter) ((TezCounter)counter).getUnderlyingCounter();
-        findCounter(c.scheme, c.key) .aggregate(counter.getValue());
-      }
-    }
-  }
   /**
    * FileSystemGroup ::= #scheme (scheme #counter (key value)*)*
    */
