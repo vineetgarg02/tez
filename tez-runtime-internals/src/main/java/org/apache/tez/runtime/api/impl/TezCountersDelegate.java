@@ -97,6 +97,12 @@ public class TezCountersDelegate extends TezCounters {
     }
 
     @Override
+    public void aggregate(long val) {
+      modifiedCounter.aggregate(val);
+      originalCounter.aggregate(val);
+    }
+
+    @Override
     public TezCounter getUnderlyingCounter() {
       return this;
     }
