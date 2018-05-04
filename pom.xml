@@ -19,7 +19,7 @@
   <groupId>org.apache.tez</groupId>
   <artifactId>tez</artifactId>
   <packaging>pom</packaging>
-  <version>0.9.2-SNAPSHOT</version>
+  <version>0.10.0-SNAPSHOT</version>
   <name>tez</name>
 
   <licenses>
@@ -778,7 +778,7 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforce-plugin</artifactId>
+          <artifactId>maven-enforcer-plugin</artifactId>
           <version>1.4</version>
         </plugin>
         <plugin>
